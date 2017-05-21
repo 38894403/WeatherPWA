@@ -117,7 +117,7 @@
     card.querySelector('.date').textContent = current.date;
     card.querySelector('.current .icon').classList.add(app.getIconClass(current.code));
     card.querySelector('.current .temperature .value').textContent =
-      Math.round(current.temp);
+      Math.ceil((Math.round(current.temp)-32)/1.8);
     card.querySelector('.current .sunrise').textContent = sunrise;
     card.querySelector('.current .sunset').textContent = sunset;
     card.querySelector('.current .humidity').textContent =
@@ -136,9 +136,11 @@
           app.daysOfWeek[(i + today) % 7];
         nextDay.querySelector('.icon').classList.add(app.getIconClass(daily.code));
         nextDay.querySelector('.temp-high .value').textContent =
-          Math.round(daily.high);
+          // Math.round(daily.high);
+          Math.ceil((Math.round(daily.high)-32)/1.8);
         nextDay.querySelector('.temp-low .value').textContent =
-          Math.round(daily.low);
+          // Math.round(daily.low);
+          Math.ceil((Math.round(daily.low)-32)/1.8);
       }
     }
     if (app.isLoading) {
@@ -167,6 +169,9 @@
     var statement = 'select * from weather.forecast where woeid=' + key;
     var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
         statement;
+
+    // var url ="http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=xOcGEjdqlAmoyCOU2jgvc1sko0UFtPNF";
+
     // TODO add cache logic here
     if ('caches' in window) {
       /*
@@ -295,9 +300,9 @@
    * discussion.
    */
   var initialWeatherForecast = {
-    key: '2459115',
-    label: 'New York, NY',
-    created: '2016-07-22T01:00:00Z',
+    key: '2151330',
+    label: '北京',
+    created: '',
     channel: {
       astronomy: {
         sunrise: "5:43 am",
@@ -305,8 +310,8 @@
       },
       item: {
         condition: {
-          text: "Windy",
-          date: "Thu, 21 Jul 2016 09:00 PM EDT",
+          text: "rain",
+          date: "Thu, 21 Jul 2017 09:00 PM EDT",
           temp: 56,
           code: 24
         },
@@ -349,10 +354,10 @@
 
 
   // TODO add service worker code here
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-             .register('./service-worker.js')
-             .then(function() { console.log('Service Worker Registered'); });
-  }
+  // if ('serviceWorker' in navigator) {
+  //   navigator.serviceWorker
+  //            .register('./service-worker.js')
+  //            .then(function() { console.log('Service Worker Registered'); });
+  // }
 
 })();
